@@ -144,12 +144,12 @@ class _AuthScreenState extends State<AuthScreen> {
                                 if (value == null ||
                                     value.isEmpty ||
                                     value.trim().length < 4) {
-                                  return 'Please enter at least 4 characters';
+                                  return 'Please enter at least 4 characters.';
                                 }
                                 return null;
                               },
-                              onSaved: (newValue) {
-                                _enteredUsername = newValue!;
+                              onSaved: (value) {
+                                _enteredUsername = value!;
                               },
                             ),
                           TextFormField(

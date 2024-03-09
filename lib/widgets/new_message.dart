@@ -12,7 +12,7 @@ class NewMessage extends StatefulWidget {
 }
 
 class _NewMessageState extends State<NewMessage> {
-  final _messageController = new TextEditingController();
+  final _messageController = TextEditingController();
 
   @override
   void dispose() {
@@ -31,7 +31,6 @@ class _NewMessageState extends State<NewMessage> {
     _messageController.clear();
 
     final user = FirebaseAuth.instance.currentUser!;
-
     final userData = await FirebaseFirestore.instance
         .collection('users')
         .doc(user.uid)
@@ -39,21 +38,17 @@ class _NewMessageState extends State<NewMessage> {
 
     FirebaseFirestore.instance.collection('chat').add({
       'text': enteredMessage,
-      'createAt': Timestamp.now(),
+      'createdAt': Timestamp.now(),
       'userId': user.uid,
       'username': userData.data()!['username'],
-      'userImage': userData.data()!['imageUrl'],
+      'userImage': userData.data()!['image_url'],
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(
-        left: 15,
-        right: 1,
-        bottom: 14,
-      ),
+      padding: const EdgeInsets.only(left: 15, right: 1, bottom: 14),
       child: Row(
         children: [
           Expanded(
@@ -62,15 +57,15 @@ class _NewMessageState extends State<NewMessage> {
               textCapitalization: TextCapitalization.sentences,
               autocorrect: true,
               enableSuggestions: true,
-              decoration:
-                  const InputDecoration(labelText: 'Send a message ...'),
+              decoration: const InputDecoration(labelText: 'Send a message...'),
             ),
           ),
           IconButton(
-            onPressed: _submitMessage,
+            color: Theme.of(context).colorScheme.primary,
             icon: const Icon(
               Icons.send,
             ),
+            onPressed: _submitMessage,
           ),
         ],
       ),
